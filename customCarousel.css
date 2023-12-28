@@ -1,0 +1,77 @@
+.slider-logo_list-wrapper {
+  overflow: scroll;
+  padding-bottom: 0.5em;
+}
+
+.slider-logo_list-wrapper::-webkit-scrollbar {
+  height: 0.25em;
+  width: 100%;
+}
+
+.slider-logo_list-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slider-logo_list-wrapper::-webkit-scrollbar-thumb {
+  background: var(--cream);
+  border-radius: 2em;
+}
+
+.logo-testimonials_list {
+  transition: transform 0.5s ease-in-out;
+}
+
+.slider-logo_list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-testimonials_item {
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  width: 100%;
+  opacity: 0;
+}
+
+.logo-testimonials_item.active {
+  opacity: 1;
+}
+
+.slider-logo_item {
+  transition: background 0.2s ease-in-out;
+}
+
+.slider-logo_item:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.slider-logo_item.clickedActive {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.slider-logo_progress-bar {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  width: 100%;
+}
+
+.active .slider-logo_progress-bar {
+  opacity: 1;
+  animation: logoProgressBar 5s ease-in;
+  width: 100%;
+}
+
+.clickedActive .slider-logo_progress-bar {
+  opacity: 1;
+  width: 100%;
+}
+
+@keyframes logoProgressBar {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
