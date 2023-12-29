@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', function () {
     callback();
   };
 
+  let hasIntersected = false;
+  let carouselInterval = null;
+
   // set initial active item and interval when wrapper is on the screen
   const observer = new IntersectionObserver(
     (entries) => {
@@ -68,6 +71,18 @@ document.addEventListener('DOMContentLoaded', function () {
         if (entry.isIntersecting) {
           setActiveItem(0);
           carouselInterval = setInterval(handleNextTestimonial, 6000);
+
+          if (!hasIntersected) {
+            hasIntersected = true;
+            testimonialLogos.forEach((logo, index) => {
+              logo.addEventListener('click', () => {
+                handleTestimonialClick(index, () => {
+                  clearInterval(carouselInterval);
+                  carouselInterval = setInterval(handleNextTestimonial, 6000);
+                });
+              });
+            });
+          }
         } else {
           clearInterval(carouselInterval);
         }
@@ -77,15 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
   );
 
   observer.observe(testimonialWrapper);
-
-  testimonialLogos.forEach((logo, index) => {
-    logo.addEventListener('click', () => {
-      handleTestimonialClick(index, () => {
-        clearInterval(carouselInterval);
-        carouselInterval = setInterval(handleNextTestimonial, 6000);
-      });
-    });
-  });
 
   let touchstartX = 0;
   let touchendX = 0;
@@ -108,6 +114,8 @@ document.addEventListener('DOMContentLoaded', function () {
   );
 
   function handleGesture() {
+    // add deadzone to touch so that when scrolling on mobile it doesn't trigger the carousel
+    if (Math.abs(touchendX - touchstartX) < 100) return;
     if (touchendX <= touchstartX) {
       handleNextTestimonial(() => {
         clearInterval(carouselInterval);
